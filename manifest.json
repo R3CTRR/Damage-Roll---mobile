@@ -3,13 +3,21 @@
     "short_name": "DamageRoll",
     "start_url": "/Damage-Roll----mobile/",
     "display": "fullscreen",
-    "background_color": "#000000",
-    "theme_color": "#000000",
+    "background_color": "#241A15",
+    "theme_color": "#F6CF2E",
+    "description": "A dark fantasy card game by SunCast Studios! inspired by `MAGIC: the gathering` and available on itch.io for free",
     "icons": [
         {
-            "src": "https://r3ctrr313.github.io/Damage-Roll----mobile/icon.png",
+            "src": "icon-512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
         }
     ]
 }
