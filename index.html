@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="manifest" href="manifest.json">
     <style>
         /* ── MOBILE SCALING ── */
         #game-container {
@@ -1434,6 +1435,62 @@
 <body>
 
 <canvas id="embers" width="980" height="670"></canvas>
+
+<!-- TAP TO START OVERLAY -->
+<div id="tap-to-start" style="
+    position: fixed; inset: 0; z-index: 99999;
+    background: radial-gradient(ellipse at 50% 40%, #2d1500 0%, #0d0500 50%, #000 100%);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    cursor: pointer; touch-action: manipulation;
+    font-family: 'Cinzel', serif;
+">
+    <div style="
+        font-family: 'UnifrakturMaguntia', cursive;
+        font-size: clamp(48px, 12vw, 96px);
+        color: #c8a460;
+        text-shadow: 0 0 40px rgba(200,160,80,0.6), 0 0 80px rgba(180,100,0,0.3);
+        margin-bottom: 20px;
+        animation: tts-pulse 2s ease-in-out infinite;
+    ">Damage Roll</div>
+    <div style="
+        font-size: clamp(13px, 3.5vw, 20px);
+        color: #a07840;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        animation: tts-pulse 2s ease-in-out infinite 0.5s;
+    ">Tap to Begin</div>
+    <div style="
+        margin-top: 14px;
+        font-size: clamp(10px, 2.5vw, 14px);
+        color: rgba(160,120,60,0.5);
+        letter-spacing: 2px;
+    ">SunCast Studios</div>
+</div>
+<style>
+@keyframes tts-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+</style>
+<script>
+(function() {
+    const overlay = document.getElementById('tap-to-start');
+    function unlock() {
+        // Unlock AudioContext
+        if (window.AC && window.AC.state === 'suspended') window.AC.resume().catch(()=>{});
+        try { window.AC = new (window.AudioContext || window.webkitAudioContext)(); window.AC.resume(); } catch(e) {}
+        // Start music
+        setTimeout(() => { try { startMenuAudio(); } catch(e) {} }, 100);
+        // Fade out overlay
+        overlay.style.transition = 'opacity 0.6s';
+        overlay.style.opacity = '0';
+        setTimeout(() => { overlay.style.display = 'none'; }, 650);
+    }
+    overlay.addEventListener('click', unlock);
+    overlay.addEventListener('touchend', function(e) { e.preventDefault(); unlock(); }, { passive: false });
+})();
+</script>
 
 <div id="game-container">
     <div id="flash-overlay"></div>
